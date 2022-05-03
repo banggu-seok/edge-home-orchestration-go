@@ -134,7 +134,15 @@ func (h *Handler) SetCertificateFilePath(path string) {
 
 // APIV1Ping handles ping request from remote orchestration
 func (h *Handler) APIV1Ping(w http.ResponseWriter, r *http.Request) {
-	h.helper.Response(w, nil, http.StatusOK)
+	respJSONMsg := make(map[string]interface{})
+	respJSONMsg["Ping"] = servicemgrtypes.Ping
+	respEncryptBytes, err := h.Key.EncryptJSONToByte(respJSONMsg)
+	if err != nil {
+		log.Error(logPrefix, cannotEncryption, err.Error())
+		h.helper.Response(w, nil, http.StatusServiceUnavailable)
+		return
+	}
+	h.helper.Response(w, respEncryptBytes, http.StatusOK)
 }
 
 // APIV1ServicemgrServicesPost handles service execution request from remote orchestration
