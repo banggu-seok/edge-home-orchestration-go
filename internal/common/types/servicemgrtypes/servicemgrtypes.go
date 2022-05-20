@@ -10,6 +10,9 @@ const (
 
 	// ConstKeyNotiChan is key of notification channel
 	// ConstKeyNotiChan = "NotiChan"
+	
+	// ConstKeyPing is Key of Ping
+	ConstKeyPing = "Ping"
 
 	// ConstKeyStatus is key of status
 	ConstKeyStatus = "Status"
